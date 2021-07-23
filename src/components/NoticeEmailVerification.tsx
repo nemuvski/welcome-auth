@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../libs/Firebase';
-import { Button, makeStyles } from '@material-ui/core';
+import { Button, makeStyles, Snackbar } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 import { sendEmailVerification } from '../libs/Authenticaton';
 import ErrorMessage from './ErrorMessage';
@@ -18,6 +18,7 @@ const NoticeEmailVerification: React.FC = () => {
   const classes = useStyles();
   const [user] = useAuthState(auth);
   const [errorMessage, setErrorMessage] = useState<string | null>();
+  const [isOpenSnackbar, setIsOpenSnackbar] = useState(false);
 
   // メールアドレスが認証済の場合は非表示
   if (!user || user.emailVerified) return null;
@@ -25,6 +26,7 @@ const NoticeEmailVerification: React.FC = () => {
   const handleClickSendEmail = async () => {
     try {
       await sendEmailVerification(user);
+      setIsOpenSnackbar(true);
       setErrorMessage(undefined);
     } catch (error) {
       setErrorMessage(error.message);
@@ -47,6 +49,17 @@ const NoticeEmailVerification: React.FC = () => {
       >
         メールアドレスの認証をしてください。
       </Alert>
+
+      <Snackbar
+        open={isOpenSnackbar}
+        autoHideDuration={5000}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'right',
+        }}
+        onClose={() => setIsOpenSnackbar(false)}
+        message='認証メールが送信されました。'
+      />
     </>
   );
 };

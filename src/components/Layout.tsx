@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, makeStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles({
   root: {
@@ -11,7 +11,7 @@ const useStyles = makeStyles({
     margin: 0,
     padding: 16,
   },
-  contentWrapper: {
+  inner: {
     width: '100%',
     maxWidth: 500,
     margin: 'auto',
@@ -23,7 +23,7 @@ const Layout: React.FC = ({ children }) => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <Card className={classes.contentWrapper}>{children}</Card>
+      <div className={classes.inner}>{children}</div>
     </div>
   );
 };

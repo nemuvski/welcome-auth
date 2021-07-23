@@ -1,6 +1,9 @@
 # Welcome Authentication Example
 
-Firebase Authenticationを使ったちょっとしたデモ。
+Firebase Authenticationを使ったデモアプリ。
+
+- メールアドレスとパスワードで登録/ログイン
+- メールアドレスの認証メールの送信
 
 ## 前準備 & 起動
 

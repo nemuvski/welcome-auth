@@ -26,6 +26,14 @@ export class FirebaseAuthError extends Error {
         message = 'パスワードが誤っています。';
         break;
 
+      case 'auth/invalid-email':
+        message = '入力されたメールアドレスは無効です。';
+        break;
+
+      case 'auth/user-disabled':
+        message = 'アカウントが無効化されています。管理者へ問い合わせてください。';
+        break;
+
       default:
         message = `[${error.code}] ${error.message}`;
     }

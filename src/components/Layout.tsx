@@ -23,9 +23,7 @@ const Layout: React.FC = ({ children }) => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <Card variant='outlined' className={classes.contentWrapper}>
-        {children}
-      </Card>
+      <Card className={classes.contentWrapper}>{children}</Card>
     </div>
   );
 };

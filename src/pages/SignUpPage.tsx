@@ -4,17 +4,17 @@ import { Box, CardActions, CardContent, Typography } from '@material-ui/core';
 import Header from '../components/Header';
 import EmailAndPasswordForm from '../components/EmailAndPasswordForm';
 
-const FrontPage: React.FC = () => {
+const SignUpPage: React.FC = () => {
   return (
     <>
-      <Header title='ようこそ！' />
+      <Header title='新規登録' />
       <CardContent>
-        <EmailAndPasswordForm />
+        <EmailAndPasswordForm isSignUpMode={true} />
       </CardContent>
       <CardActions>
         <Box width='100%'>
           <Typography color='textSecondary' align='center' component='p' variant='body2'>
-            アカウントはお持ちですか？ <Link to='/sign-up'>新規登録はこちら</Link>
+            アカウントはすでにお持ちですか？ <Link to='/'>ログインはこちら</Link>
           </Typography>
         </Box>
       </CardActions>
@@ -22,4 +22,4 @@ const FrontPage: React.FC = () => {
   );
 };
 
-export default FrontPage;
+export default SignUpPage;

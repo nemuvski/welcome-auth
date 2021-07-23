@@ -1,23 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Box, Button, CardActions, CardContent, Typography } from '@material-ui/core';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import { Box, CardActions, CardContent, Typography } from '@material-ui/core';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import Header from '../components/Header';
 import EmailAndPasswordForm from '../components/EmailAndPasswordForm';
 import { auth } from '../libs/Firebase';
-import { signOut } from '../libs/Authenticaton';
+import SignedInUserContent from '../components/SignedInUserContent';
 
 const FrontPage: React.FC = () => {
   const [user] = useAuthState(auth);
-
-  const handleClickSignOut = async () => {
-    try {
-      await signOut();
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   return (
     <>
@@ -25,18 +16,7 @@ const FrontPage: React.FC = () => {
 
       {/* ログイン済か否かで表示内容を切り替える */}
       {user ? (
-        <CardContent>
-          <Button
-            variant='outlined'
-            color='secondary'
-            size='medium'
-            onClick={handleClickSignOut}
-            startIcon={<ExitToAppIcon />}
-            fullWidth
-          >
-            ログアウト
-          </Button>
-        </CardContent>
+        <SignedInUserContent />
       ) : (
         <>
           <CardContent>

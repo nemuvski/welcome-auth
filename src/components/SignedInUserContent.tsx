@@ -1,14 +1,10 @@
 import React from 'react';
-import { useAuthState } from 'react-firebase-hooks/auth';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { Button, CardContent } from '@material-ui/core';
 import { signOut } from '../libs/Authenticaton';
-import { auth } from '../libs/Firebase';
+import NoticeEmailVerification from './NoticeEmailVerification';
 
 const SignedInUserContent: React.FC = () => {
-  const [user] = useAuthState(auth);
-  if (!user) return null;
-
   /**
    * ログアウトボタン押下時の処理
    */
@@ -22,14 +18,9 @@ const SignedInUserContent: React.FC = () => {
 
   return (
     <CardContent>
-      <Button
-        variant='outlined'
-        color='secondary'
-        size='medium'
-        onClick={handleClickSignOut}
-        startIcon={<ExitToAppIcon />}
-        fullWidth
-      >
+      <NoticeEmailVerification />
+
+      <Button variant='outlined' size='medium' onClick={handleClickSignOut} startIcon={<ExitToAppIcon />} fullWidth>
         ログアウト
       </Button>
     </CardContent>

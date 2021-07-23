@@ -1,3 +1,4 @@
+import firebase from 'firebase/app';
 import { auth } from './Firebase';
 import { FirebaseAuthError } from './FirebaseAuthError';
 
@@ -35,6 +36,18 @@ export const signIn = async (email: string, password: string) => {
 export const signOut = async () => {
   try {
     await auth.signOut();
+  } catch (error) {
+    throw new FirebaseAuthError(error);
+  }
+};
+
+/**
+ * メールアドレスの認証メールを送信する
+ * @param user
+ */
+export const sendEmailVerification = async (user: firebase.User) => {
+  try {
+    await user.sendEmailVerification();
   } catch (error) {
     throw new FirebaseAuthError(error);
   }

@@ -1,12 +1,11 @@
 import React, { useContext, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { Box, Button, IconButton, InputAdornment, makeStyles, TextField } from '@material-ui/core';
+import { Box, Button, makeStyles, TextField } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
-import VisibilityIcon from '@material-ui/icons/Visibility';
-import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import { sendEmailVerification, signIn, signUp } from '../libs/Authenticaton';
 import ErrorMessage from './ErrorMessage';
 import { SnackbarContext } from '../contexts/SnackbarContext';
+import PasswordTextField from './PasswordTextField';
 
 type Props = {
   isSignUpMode?: boolean;
@@ -28,7 +27,6 @@ const passwordMinLength = 6;
 const EmailAndPasswordForm: React.FC<Props> = ({ isSignUpMode = false }) => {
   const classes = useStyles();
   const { setSnackbarMessage } = useContext(SnackbarContext);
-  const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | undefined>();
 
   const {
@@ -105,27 +103,7 @@ const EmailAndPasswordForm: React.FC<Props> = ({ isSignUpMode = false }) => {
           name='password'
           rules={{ required: true, minLength: passwordMinLength }}
           render={({ field: { onChange, value } }) => (
-            <TextField
-              className={classes.input}
-              variant='outlined'
-              label='パスワード'
-              type={showPassword ? 'text' : 'password'}
-              size='small'
-              value={value}
-              onChange={onChange}
-              helperText={`${passwordMinLength}文字以上の半角英数記号`}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position='end'>
-                    <IconButton onClick={() => setShowPassword(!showPassword)}>
-                      {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-              fullWidth
-              required
-            />
+            <PasswordTextField className={classes.input} value={value} onChange={onChange} />
           )}
         />
         <Box width='100%' textAlign='center'>

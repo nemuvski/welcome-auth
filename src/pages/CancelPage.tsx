@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Box, Button, CardContent, IconButton, InputAdornment, TextField } from '@material-ui/core';
+import { Box, Button, CardContent } from '@material-ui/core';
 import Header from '../components/Header';
 import { cancelUser, signIn } from '../libs/Authenticaton';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -8,8 +8,7 @@ import { auth } from '../libs/Firebase';
 import ErrorMessage from '../components/ErrorMessage';
 import { SnackbarContext } from '../contexts/SnackbarContext';
 import { Controller, useForm } from 'react-hook-form';
-import VisibilityIcon from '@material-ui/icons/Visibility';
-import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+import PasswordTextField from '../components/PasswordTextField';
 
 type FormFields = {
   password: string;
@@ -19,7 +18,6 @@ const CancelPage: React.FC = () => {
   const [user] = useAuthState(auth);
   const { setSnackbarMessage } = useContext(SnackbarContext);
   const [errorMessage, setErrorMessage] = useState<string | undefined>();
-  const [showPassword, setShowPassword] = useState(false);
 
   const {
     handleSubmit,
@@ -73,29 +71,8 @@ const CancelPage: React.FC = () => {
             control={control}
             name='password'
             rules={{ required: true }}
-            render={({ field: { onChange, value } }) => (
-              <TextField
-                variant='outlined'
-                label='パスワード'
-                type={showPassword ? 'text' : 'password'}
-                size='small'
-                value={value}
-                onChange={onChange}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position='end'>
-                      <IconButton onClick={() => setShowPassword(!showPassword)}>
-                        {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-                fullWidth
-                required
-              />
-            )}
+            render={({ field: { onChange, value } }) => <PasswordTextField onChange={onChange} value={value} />}
           />
-
           <Box width='100%' display='flex' alignItems='center' justifyContent='space-evenly' marginTop='16px'>
             <Button variant='outlined' size='medium' color='primary' component={Link} to='/'>
               戻る

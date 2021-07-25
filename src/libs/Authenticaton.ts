@@ -42,8 +42,22 @@ export const signOut = async () => {
 };
 
 /**
+ * アカウントの削除
+ *
+ * @param user ユーザー
+ */
+export const cancelUser = async (user: firebase.User) => {
+  try {
+    await user.delete();
+  } catch (error) {
+    throw new FirebaseAuthError(error);
+  }
+};
+
+/**
  * メールアドレスの認証メールを送信する
- * @param user
+ *
+ * @param user ユーザー
  */
 export const sendEmailVerification = async (user: firebase.User) => {
   try {

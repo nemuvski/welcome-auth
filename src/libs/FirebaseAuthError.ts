@@ -34,6 +34,10 @@ export class FirebaseAuthError extends Error {
         message = 'アカウントが無効化されています。管理者へ問い合わせてください。';
         break;
 
+      case 'auth/requires-recent-login':
+        message = '再度ログインしてから、操作してください。';
+        break;
+
       default:
         message = `[${error.code}] ${error.message}`;
     }

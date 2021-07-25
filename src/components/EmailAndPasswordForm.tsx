@@ -103,7 +103,12 @@ const EmailAndPasswordForm: React.FC<Props> = ({ isSignUpMode = false }) => {
           name='password'
           rules={{ required: true, minLength: passwordMinLength }}
           render={({ field: { onChange, value } }) => (
-            <PasswordTextField className={classes.input} value={value} onChange={onChange} />
+            <PasswordTextField
+              className={classes.input}
+              value={value}
+              onChange={onChange}
+              helperText={`${passwordMinLength}文字以上の半角英数字記号`}
+            />
           )}
         />
         <Box width='100%' textAlign='center'>

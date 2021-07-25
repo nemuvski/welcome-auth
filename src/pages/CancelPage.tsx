@@ -74,7 +74,7 @@ const CancelPage: React.FC = () => {
             render={({ field: { onChange, value } }) => <PasswordTextField onChange={onChange} value={value} />}
           />
           <Box width='100%' display='flex' alignItems='center' justifyContent='space-evenly' marginTop='16px'>
-            <Button variant='outlined' size='medium' color='primary' component={Link} to='/'>
+            <Button variant='outlined' size='medium' component={Link} to='/'>
               戻る
             </Button>
             <Button

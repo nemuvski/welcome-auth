@@ -4,7 +4,7 @@ import { Box, Button, IconButton, InputAdornment, makeStyles, TextField } from '
 import CheckIcon from '@material-ui/icons/Check';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
-import { signIn, signUp } from '../libs/Authenticaton';
+import { sendEmailVerification, signIn, signUp } from '../libs/Authenticaton';
 import ErrorMessage from './ErrorMessage';
 
 type Props = {
@@ -61,7 +61,12 @@ const EmailAndPasswordForm: React.FC<Props> = ({ isSignUpMode = false }) => {
 
     try {
       if (isSignUpMode) {
-        await signUp(email, password);
+        const userCredential = await signUp(email, password);
+
+        // 新規登録時に認証メールを送信する
+        if (userCredential.user) {
+          await sendEmailVerification(userCredential.user);
+        }
       } else {
         await signIn(email, password);
       }

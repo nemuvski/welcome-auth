@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Box, Button, IconButton, InputAdornment, makeStyles, TextField } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
@@ -6,6 +6,7 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import { sendEmailVerification, signIn, signUp } from '../libs/Authenticaton';
 import ErrorMessage from './ErrorMessage';
+import { SnackbarContext } from '../contexts/SnackbarContext';
 
 type Props = {
   isSignUpMode?: boolean;
@@ -26,7 +27,7 @@ const passwordMinLength = 6;
 
 const EmailAndPasswordForm: React.FC<Props> = ({ isSignUpMode = false }) => {
   const classes = useStyles();
-
+  const { setSnackbarMessage } = useContext(SnackbarContext);
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | undefined>();
 
@@ -66,6 +67,7 @@ const EmailAndPasswordForm: React.FC<Props> = ({ isSignUpMode = false }) => {
         // 新規登録時に認証メールを送信する
         if (userCredential.user) {
           await sendEmailVerification(userCredential.user);
+          setSnackbarMessage('認証メールが送信されました。');
         }
       } else {
         await signIn(email, password);

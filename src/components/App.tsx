@@ -7,6 +7,7 @@ import FrontPage from '../pages/FrontPage';
 import SignUpPage from '../pages/SignUpPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import { auth } from '../libs/Firebase';
+import { SnackbarProvider } from '../contexts/SnackbarContext';
 
 const App: React.FC = () => {
   const [user, initializing] = useAuthState(auth);
@@ -19,18 +20,20 @@ const App: React.FC = () => {
             <CircularProgress />
           </Box>
         ) : (
-          <Card>
-            <Switch>
-              {/* フロント */}
-              <Route exact path='/' component={FrontPage} />
+          <SnackbarProvider>
+            <Card>
+              <Switch>
+                {/* フロント */}
+                <Route exact path='/' component={FrontPage} />
 
-              {/* 新規登録 */}
-              <Route exact path='/sign-up' render={() => (user ? <Redirect to='/' /> : <SignUpPage />)} />
+                {/* 新規登録 */}
+                <Route exact path='/sign-up' render={() => (user ? <Redirect to='/' /> : <SignUpPage />)} />
 
-              {/* ページが見つからない */}
-              <Route component={NotFoundPage} />
-            </Switch>
-          </Card>
+                {/* ページが見つからない */}
+                <Route component={NotFoundPage} />
+              </Switch>
+            </Card>
+          </SnackbarProvider>
         )}
       </Layout>
     </BrowserRouter>

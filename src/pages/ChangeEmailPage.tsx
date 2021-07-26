@@ -115,7 +115,7 @@ const ChangeEmailPage: React.FC = () => {
               戻る
             </Button>
             <Button
-              disabled={Boolean(errors.password)}
+              disabled={Boolean(errors.newEmail) || Boolean(errors.password)}
               type='submit'
               variant='outlined'
               size='medium'

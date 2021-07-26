@@ -38,6 +38,7 @@ const CancelPage: React.FC = () => {
     const { password } = formFields;
     if (!password) {
       setErrorMessage('パスワードを入力してください。');
+      return;
     }
 
     try {

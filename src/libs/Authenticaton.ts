@@ -55,6 +55,20 @@ export const cancelUser = async (user: firebase.User) => {
 };
 
 /**
+ * ユーザーのメールアドレスを変更
+ *
+ * @param user ユーザー
+ * @param newEmail 新しいメールアドレス
+ */
+export const changeEmail = async (user: firebase.User, newEmail: string) => {
+  try {
+    await user.updateEmail(newEmail);
+  } catch (error) {
+    throw new FirebaseAuthError(error);
+  }
+};
+
+/**
  * メールアドレスの認証メールを送信する
  *
  * @param user ユーザー

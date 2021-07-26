@@ -5,6 +5,7 @@ import { Box, Card, CircularProgress } from '@material-ui/core';
 import Layout from './Layout';
 import FrontPage from '../pages/FrontPage';
 import SignUpPage from '../pages/SignUpPage';
+import ChangeEmailPage from '../pages/ChangeEmailPage';
 import CancelPage from '../pages/CancelPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import { auth } from '../libs/Firebase';
@@ -29,6 +30,13 @@ const App: React.FC = () => {
 
                 {/* 新規登録 */}
                 <Route exact path='/sign-up' render={() => (user ? <Redirect to='/' /> : <SignUpPage />)} />
+
+                {/* メールアドレス変更 */}
+                <Route
+                  exact
+                  path='/change-email'
+                  render={() => (user && user.emailVerified ? <ChangeEmailPage /> : <Redirect to='/' />)}
+                />
 
                 {/* 退会手続き */}
                 <Route exact path='/cancel' render={() => (user ? <CancelPage /> : <Redirect to='/' />)} />

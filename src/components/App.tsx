@@ -6,6 +6,7 @@ import Layout from './Layout';
 import FrontPage from '../pages/FrontPage';
 import SignUpPage from '../pages/SignUpPage';
 import ChangeEmailPage from '../pages/ChangeEmailPage';
+import ChangePasswordPage from '../pages/ChangePasswordPage';
 import CancelPage from '../pages/CancelPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import { auth } from '../libs/Firebase';
@@ -36,6 +37,13 @@ const App: React.FC = () => {
                   exact
                   path='/change-email'
                   render={() => (user && user.emailVerified ? <ChangeEmailPage /> : <Redirect to='/' />)}
+                />
+
+                {/* パスワード変更 */}
+                <Route
+                  exact
+                  path='/change-password'
+                  render={() => (user && user.emailVerified ? <ChangePasswordPage /> : <Redirect to='/' />)}
                 />
 
                 {/* 退会手続き */}

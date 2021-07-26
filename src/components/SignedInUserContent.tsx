@@ -53,6 +53,18 @@ const SignedInUserContent: React.FC = () => {
         className={classes.input}
         variant='outlined'
         size='medium'
+        startIcon={<EditIcon />}
+        component={Link}
+        to='/change-password'
+        disabled={!user.emailVerified}
+        fullWidth
+      >
+        パスワード変更
+      </Button>
+      <Button
+        className={classes.input}
+        variant='outlined'
+        size='medium'
         startIcon={<HowToVoteIcon />}
         component={Link}
         to='/cancel'

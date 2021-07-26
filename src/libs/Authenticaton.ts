@@ -79,6 +79,25 @@ export const changeEmail = async (user: firebase.User, newEmail: string, passwor
 };
 
 /**
+ * ユーザーのパスワードを変更
+ *
+ * @param user ユーザー
+ * @param currentPassword 現在のパスワード
+ * @param newPassword 新しいパスワード
+ */
+export const changePassword = async (user: firebase.User, currentPassword: string, newPassword: string) => {
+  try {
+    if (user.email) {
+      const authCredential = firebase.auth.EmailAuthProvider.credential(user.email, currentPassword);
+      const userCredential = await user.reauthenticateWithCredential(authCredential);
+      await userCredential.user?.updatePassword(newPassword);
+    }
+  } catch (error) {
+    throw new FirebaseAuthError(error);
+  }
+};
+
+/**
  * メールアドレスの認証メールを送信する
  *
  * @param user ユーザー

@@ -32,7 +32,7 @@ const EmailAndPasswordForm: React.FC<Props> = ({ isSignUpMode = false }) => {
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm({
     mode: 'onChange',
     reValidateMode: 'onChange',
@@ -118,7 +118,7 @@ const EmailAndPasswordForm: React.FC<Props> = ({ isSignUpMode = false }) => {
             size='medium'
             color='primary'
             startIcon={<CheckIcon />}
-            disabled={Boolean(errors.email) || Boolean(errors.password)}
+            disabled={Boolean(errors.email) || Boolean(errors.password) || isSubmitting}
           >
             {isSignUpMode ? '登録' : 'ログイン'}
           </Button>

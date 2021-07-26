@@ -22,7 +22,7 @@ const CancelPage: React.FC = () => {
   const {
     handleSubmit,
     control,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm({
     mode: 'onChange',
     reValidateMode: 'onChange',
@@ -74,11 +74,11 @@ const CancelPage: React.FC = () => {
             render={({ field: { onChange, value } }) => <PasswordTextField onChange={onChange} value={value} />}
           />
           <Box width='100%' display='flex' alignItems='center' justifyContent='space-evenly' marginTop='16px'>
-            <Button variant='outlined' size='medium' component={Link} to='/'>
+            <Button variant='outlined' size='medium' component={Link} to='/' disabled={isSubmitting}>
               戻る
             </Button>
             <Button
-              disabled={Boolean(errors.password)}
+              disabled={Boolean(errors.password) || isSubmitting}
               type='submit'
               variant='outlined'
               size='medium'

@@ -31,7 +31,7 @@ const ChangeEmailPage: React.FC = () => {
   const {
     handleSubmit,
     control,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm({
     mode: 'onChange',
     reValidateMode: 'onChange',
@@ -111,11 +111,11 @@ const ChangeEmailPage: React.FC = () => {
             )}
           />
           <Box width='100%' display='flex' alignItems='center' justifyContent='space-evenly' marginTop='16px'>
-            <Button variant='outlined' size='medium' component={Link} to='/'>
+            <Button variant='outlined' size='medium' component={Link} to='/' disabled={isSubmitting}>
               戻る
             </Button>
             <Button
-              disabled={Boolean(errors.newEmail) || Boolean(errors.password)}
+              disabled={Boolean(errors.newEmail) || Boolean(errors.password) || isSubmitting}
               type='submit'
               variant='outlined'
               size='medium'

@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Box, Button, CardContent, makeStyles, TextField, Typography } from '@material-ui/core';
 import Header from '../components/Header';
-import { changeEmail, signIn } from '../libs/Authenticaton';
+import { changeEmail } from '../libs/Authenticaton';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../libs/Firebase';
 import ErrorMessage from '../components/ErrorMessage';
@@ -56,9 +56,8 @@ const ChangeEmailPage: React.FC = () => {
 
     try {
       if (user.email) {
-        await signIn(user.email, password);
-        await changeEmail(user, newEmail);
-        setSnackbarMessage('メールアドレスを変更しました。');
+        await changeEmail(user, newEmail, password);
+        setSnackbarMessage('メールアドレスを変更しました。再度メールアドレスの認証が必要です。');
         history.push('/');
       } else {
         setErrorMessage('処理が中断されました。再度ログインして試してください。');

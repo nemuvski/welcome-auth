@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Box, Button, CardContent } from '@material-ui/core';
 import Header from '../components/Header';
-import { cancelUser, signIn } from '../libs/Authenticaton';
+import { cancelUser } from '../libs/Authenticaton';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../libs/Firebase';
 import ErrorMessage from '../components/ErrorMessage';
@@ -43,8 +43,7 @@ const CancelPage: React.FC = () => {
 
     try {
       if (user.email) {
-        await signIn(user.email, password);
-        await cancelUser(user);
+        await cancelUser(user, password);
         setSnackbarMessage('退会手続きが完了しました。ご利用いただきありがとうございました。');
       } else {
         setErrorMessage('処理が中断されました。再度ログインして試してください。');

@@ -45,10 +45,15 @@ export const signOut = async () => {
  * アカウントの削除
  *
  * @param user ユーザー
+ * @param password 現在のパスワード
  */
-export const cancelUser = async (user: firebase.User) => {
+export const cancelUser = async (user: firebase.User, password: string) => {
   try {
-    await user.delete();
+    if (user.email) {
+      const authCredential = firebase.auth.EmailAuthProvider.credential(user.email, password);
+      const userCredential = await user.reauthenticateWithCredential(authCredential);
+      await userCredential.user?.delete();
+    }
   } catch (error) {
     throw new FirebaseAuthError(error);
   }
@@ -59,10 +64,15 @@ export const cancelUser = async (user: firebase.User) => {
  *
  * @param user ユーザー
  * @param newEmail 新しいメールアドレス
+ * @param password 現在のパスワード
  */
-export const changeEmail = async (user: firebase.User, newEmail: string) => {
+export const changeEmail = async (user: firebase.User, newEmail: string, password: string) => {
   try {
-    await user.updateEmail(newEmail);
+    if (user.email) {
+      const authCredential = firebase.auth.EmailAuthProvider.credential(user.email, password);
+      const userCredential = await user.reauthenticateWithCredential(authCredential);
+      await userCredential.user?.updateEmail(newEmail);
+    }
   } catch (error) {
     throw new FirebaseAuthError(error);
   }

@@ -119,7 +119,7 @@ const ChangeEmailPage: React.FC = () => {
               type='submit'
               variant='outlined'
               size='medium'
-              color='secondary'
+              color='primary'
             >
               変更
             </Button>

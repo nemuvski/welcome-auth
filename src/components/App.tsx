@@ -11,6 +11,7 @@ import CancelPage from '../pages/CancelPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import { auth } from '../libs/Firebase';
 import { SnackbarProvider } from '../contexts/SnackbarContext';
+import ForgotPasswordPage from '../pages/ForgotPasswordPage';
 
 const App: React.FC = () => {
   const [user, initializing] = useAuthState(auth);
@@ -31,6 +32,13 @@ const App: React.FC = () => {
 
                 {/* 新規登録 */}
                 <Route exact path='/sign-up' render={() => (user ? <Redirect to='/' /> : <SignUpPage />)} />
+
+                {/* パスワード再設定 */}
+                <Route
+                  exact
+                  path='/forgot-password'
+                  render={() => (user ? <Redirect to='/' /> : <ForgotPasswordPage />)}
+                />
 
                 {/* メールアドレス変更 */}
                 <Route

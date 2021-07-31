@@ -27,6 +27,9 @@ const FrontPage: React.FC = () => {
               <Typography color='textSecondary' align='center' component='p' variant='body2'>
                 アカウントはお持ちですか？ <Link to='/sign-up'>新規登録はこちら</Link>
               </Typography>
+              <Typography color='textSecondary' align='center' component='p' variant='body2'>
+                パスワードをお忘れですか？ <Link to='/forgot-password'>パスワード再設定はこちら</Link>
+              </Typography>
             </Box>
           </CardActions>
         </>

@@ -109,3 +109,16 @@ export const sendEmailVerification = async (user: firebase.User) => {
     throw new FirebaseAuthError(error);
   }
 };
+
+/**
+ * パスワード再設定の案内メールを送信する
+ *
+ * @param email メールアドレス
+ */
+export const sendPasswordResetEmail = async (email: string) => {
+  try {
+    await auth.sendPasswordResetEmail(email);
+  } catch (error) {
+    throw new FirebaseAuthError(error);
+  }
+};

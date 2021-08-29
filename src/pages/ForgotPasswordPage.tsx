@@ -37,7 +37,7 @@ const ForgotPasswordPage: React.FC = () => {
     try {
       await sendPasswordResetEmail(email);
       setSnackbarMessage('パスワード再設定の案内メールが送信されました。');
-    } catch (error) {
+    } catch (error: any) {
       setErrorMessage(error.message);
     }
   };

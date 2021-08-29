@@ -70,7 +70,7 @@ const EmailAndPasswordForm: React.FC<Props> = ({ isSignUpMode = false }) => {
       } else {
         await signIn(email, password);
       }
-    } catch (error) {
+    } catch (error: any) {
       setErrorMessage(error.message);
     }
   };

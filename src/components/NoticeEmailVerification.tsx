@@ -29,7 +29,7 @@ const NoticeEmailVerification: React.FC = () => {
       await sendEmailVerification(user);
       setSnackbarMessage('認証メールが送信されました。');
       setErrorMessage(undefined);
-    } catch (error) {
+    } catch (error: any) {
       setErrorMessage(error.message);
     }
   };

@@ -55,7 +55,7 @@ const ChangePasswordPage: React.FC = () => {
       await changePassword(user, currentPassword, newPassword);
       setSnackbarMessage('パスワードを変更しました。');
       history.push('/');
-    } catch (error) {
+    } catch (error: any) {
       setErrorMessage(error.message);
     }
   };

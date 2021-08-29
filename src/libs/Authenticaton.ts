@@ -1,4 +1,16 @@
-import firebase from 'firebase/app';
+import {
+  AuthError,
+  User as FirebaseUser,
+  signOut as firebaseSignOut,
+  updateEmail,
+  updatePassword,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  EmailAuthProvider,
+  reauthenticateWithCredential,
+  sendPasswordResetEmail as firebaseSendPasswordResetEmail,
+  sendEmailVerification as firebaseSendEmailVerification,
+} from 'firebase/auth';
 import { auth } from './Firebase';
 import { FirebaseAuthError } from './FirebaseAuthError';
 
@@ -10,9 +22,9 @@ import { FirebaseAuthError } from './FirebaseAuthError';
  */
 export const signUp = async (email: string, password: string) => {
   try {
-    return await auth.createUserWithEmailAndPassword(email, password);
+    return await createUserWithEmailAndPassword(auth, email, password);
   } catch (error) {
-    throw new FirebaseAuthError(error);
+    throw new FirebaseAuthError(error as AuthError);
   }
 };
 
@@ -24,9 +36,9 @@ export const signUp = async (email: string, password: string) => {
  */
 export const signIn = async (email: string, password: string) => {
   try {
-    return await auth.signInWithEmailAndPassword(email, password);
+    return await signInWithEmailAndPassword(auth, email, password);
   } catch (error) {
-    throw new FirebaseAuthError(error);
+    throw new FirebaseAuthError(error as AuthError);
   }
 };
 
@@ -35,9 +47,9 @@ export const signIn = async (email: string, password: string) => {
  */
 export const signOut = async () => {
   try {
-    await auth.signOut();
+    await firebaseSignOut(auth);
   } catch (error) {
-    throw new FirebaseAuthError(error);
+    throw new FirebaseAuthError(error as AuthError);
   }
 };
 
@@ -47,15 +59,17 @@ export const signOut = async () => {
  * @param user ユーザー
  * @param password 現在のパスワード
  */
-export const cancelUser = async (user: firebase.User, password: string) => {
+export const cancelUser = async (user: FirebaseUser, password: string) => {
   try {
     if (user.email) {
-      const authCredential = firebase.auth.EmailAuthProvider.credential(user.email, password);
-      const userCredential = await user.reauthenticateWithCredential(authCredential);
-      await userCredential.user?.delete();
+      const userCredential = await reauthenticateWithCredential(
+        user,
+        EmailAuthProvider.credential(user.email, password)
+      );
+      await userCredential.user.delete();
     }
   } catch (error) {
-    throw new FirebaseAuthError(error);
+    throw new FirebaseAuthError(error as AuthError);
   }
 };
 
@@ -66,15 +80,14 @@ export const cancelUser = async (user: firebase.User, password: string) => {
  * @param newEmail 新しいメールアドレス
  * @param password 現在のパスワード
  */
-export const changeEmail = async (user: firebase.User, newEmail: string, password: string) => {
+export const changeEmail = async (user: FirebaseUser, newEmail: string, password: string) => {
   try {
     if (user.email) {
-      const authCredential = firebase.auth.EmailAuthProvider.credential(user.email, password);
-      const userCredential = await user.reauthenticateWithCredential(authCredential);
-      await userCredential.user?.updateEmail(newEmail);
+      await reauthenticateWithCredential(user, EmailAuthProvider.credential(user.email, password));
+      await updateEmail(user, newEmail);
     }
   } catch (error) {
-    throw new FirebaseAuthError(error);
+    throw new FirebaseAuthError(error as AuthError);
   }
 };
 
@@ -85,15 +98,14 @@ export const changeEmail = async (user: firebase.User, newEmail: string, passwor
  * @param currentPassword 現在のパスワード
  * @param newPassword 新しいパスワード
  */
-export const changePassword = async (user: firebase.User, currentPassword: string, newPassword: string) => {
+export const changePassword = async (user: FirebaseUser, currentPassword: string, newPassword: string) => {
   try {
     if (user.email) {
-      const authCredential = firebase.auth.EmailAuthProvider.credential(user.email, currentPassword);
-      const userCredential = await user.reauthenticateWithCredential(authCredential);
-      await userCredential.user?.updatePassword(newPassword);
+      await reauthenticateWithCredential(user, EmailAuthProvider.credential(user.email, currentPassword));
+      await updatePassword(user, newPassword);
     }
   } catch (error) {
-    throw new FirebaseAuthError(error);
+    throw new FirebaseAuthError(error as AuthError);
   }
 };
 
@@ -102,11 +114,11 @@ export const changePassword = async (user: firebase.User, currentPassword: strin
  *
  * @param user ユーザー
  */
-export const sendEmailVerification = async (user: firebase.User) => {
+export const sendEmailVerification = async (user: FirebaseUser) => {
   try {
-    await user.sendEmailVerification();
+    await firebaseSendEmailVerification(user);
   } catch (error) {
-    throw new FirebaseAuthError(error);
+    throw new FirebaseAuthError(error as AuthError);
   }
 };
 
@@ -117,8 +129,8 @@ export const sendEmailVerification = async (user: firebase.User) => {
  */
 export const sendPasswordResetEmail = async (email: string) => {
   try {
-    await auth.sendPasswordResetEmail(email);
+    await firebaseSendPasswordResetEmail(auth, email);
   } catch (error) {
-    throw new FirebaseAuthError(error);
+    throw new FirebaseAuthError(error as AuthError);
   }
 };

@@ -48,7 +48,7 @@ const CancelPage: React.FC = () => {
       } else {
         setErrorMessage('処理が中断されました。再度ログインして試してください。');
       }
-    } catch (error) {
+    } catch (error: any) {
       setErrorMessage(error.message);
     }
   };

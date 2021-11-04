@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { Route, BrowserRouter, Switch, Redirect } from 'react-router-dom';
+import { Route, BrowserRouter, Routes, Navigate } from 'react-router-dom';
 import { Box, Card, CircularProgress } from '@material-ui/core';
 import Layout from './Layout';
 import FrontPage from '../pages/FrontPage';
@@ -26,40 +26,34 @@ const App: React.FC = () => {
         ) : (
           <SnackbarProvider>
             <Card>
-              <Switch>
+              <Routes>
                 {/* フロント */}
-                <Route exact path='/' component={FrontPage} />
+                <Route path='/' element={<FrontPage />} />
 
                 {/* 新規登録 */}
-                <Route exact path='/sign-up' render={() => (user ? <Redirect to='/' /> : <SignUpPage />)} />
+                <Route path='/sign-up' element={user ? <Navigate replace to='/' /> : <SignUpPage />} />
 
                 {/* パスワード再設定 */}
-                <Route
-                  exact
-                  path='/forgot-password'
-                  render={() => (user ? <Redirect to='/' /> : <ForgotPasswordPage />)}
-                />
+                <Route path='/forgot-password' element={user ? <Navigate replace to='/' /> : <ForgotPasswordPage />} />
 
                 {/* メールアドレス変更 */}
                 <Route
-                  exact
                   path='/change-email'
-                  render={() => (user && user.emailVerified ? <ChangeEmailPage /> : <Redirect to='/' />)}
+                  element={user && user.emailVerified ? <ChangeEmailPage /> : <Navigate replace to='/' />}
                 />
 
                 {/* パスワード変更 */}
                 <Route
-                  exact
                   path='/change-password'
-                  render={() => (user && user.emailVerified ? <ChangePasswordPage /> : <Redirect to='/' />)}
+                  element={user && user.emailVerified ? <ChangePasswordPage /> : <Navigate replace to='/' />}
                 />
 
                 {/* 退会手続き */}
-                <Route exact path='/cancel' render={() => (user ? <CancelPage /> : <Redirect to='/' />)} />
+                <Route path='/cancel' element={user ? <CancelPage /> : <Navigate replace to='/' />} />
 
                 {/* ページが見つからない */}
-                <Route component={NotFoundPage} />
-              </Switch>
+                <Route path='*' element={<NotFoundPage />} />
+              </Routes>
             </Card>
           </SnackbarProvider>
         )}

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Box, Button, CardContent, makeStyles } from '@material-ui/core';
 import Header from '../components/Header';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -23,7 +23,7 @@ const useStyles = makeStyles({
 
 const ChangePasswordPage: React.FC = () => {
   const classes = useStyles();
-  const history = useHistory();
+  const navigate = useNavigate();
   const [user] = useAuthState(auth);
   const { setSnackbarMessage } = useContext(SnackbarContext);
   const [errorMessage, setErrorMessage] = useState<string | undefined>();
@@ -54,7 +54,7 @@ const ChangePasswordPage: React.FC = () => {
     try {
       await changePassword(user, currentPassword, newPassword);
       setSnackbarMessage('パスワードを変更しました。');
-      history.push('/');
+      navigate('/');
     } catch (error: any) {
       setErrorMessage(error.message);
     }

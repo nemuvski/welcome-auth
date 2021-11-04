@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Box, Button, CardContent, makeStyles, TextField, Typography } from '@material-ui/core';
 import Header from '../components/Header';
 import { changeEmail } from '../libs/Authenticaton';
@@ -23,7 +23,7 @@ const useStyles = makeStyles({
 
 const ChangeEmailPage: React.FC = () => {
   const classes = useStyles();
-  const history = useHistory();
+  const navigate = useNavigate();
   const [user] = useAuthState(auth);
   const { setSnackbarMessage } = useContext(SnackbarContext);
   const [errorMessage, setErrorMessage] = useState<string | undefined>();
@@ -58,7 +58,7 @@ const ChangeEmailPage: React.FC = () => {
       if (user.email) {
         await changeEmail(user, newEmail, password);
         setSnackbarMessage('メールアドレスを変更しました。再度メールアドレスの認証が必要です。');
-        history.push('/');
+        navigate('/');
       } else {
         setErrorMessage('処理が中断されました。再度ログインして試してください。');
       }
